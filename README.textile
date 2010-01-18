@@ -1,0 +1,3 @@
+This is a rails template for creating projects that use MongoDB instead of a traditional database. It also includes the gems I typically use for projects, the 960.gs CSS framework, and the JQuery Javascript library.
+
+This is in its early stages. Instructions and more detailed documentation are forthcoming.
