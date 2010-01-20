@@ -28,7 +28,6 @@ file 'app/views/layouts/application.html.erb', <<-ERB
 </html>
 ERB
 
-# MongoDB FTW!
 db_name = ask('What should I call the database? ')
 
 initializer 'database.rb', <<-CODE
