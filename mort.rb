@@ -1,7 +1,5 @@
 #MongOdb Rails Template
-
-#based on the initial gist from bscofield: http://gist.github.com/181842
-#also inspired by Mike Gunderloy's Big Old Rails Template: http://github.com/ffmike/BigOldRailsTemplate
+require 'fileutils'
 
 # remove unneeded defaults
 run "rm public/index.html"
@@ -18,7 +16,7 @@ file 'app/views/layouts/application.html.erb', <<-ERB
 <head>
   <title>Application!</title>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js" type="text/javascript"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
   <%= stylesheet_link_tag '960' 'reset' 'text' 'global'%>
 </head>
@@ -40,7 +38,7 @@ CODE
 
 environment 'config.frameworks -= [:active_record]'
 
-gem 'mongomapper'
+gem 'mongo_mapper'
 gem 'redgreen'
 gem "haml"
 gem 'thoughtbot-shoulda', :lib => 'shoulda/rails', :source => 'http://gems.github.com'
@@ -53,6 +51,16 @@ rake 'rails:freeze:gems'
 
 plugin 'high_voltage', :git => 'git://github.com/thoughtbot/high_voltage.git'
 
+file_path =File.dirname(template)+ "/files/"
+inside 'public' do
+  Dir["#{file_path}/*.css"].each do |file|
+    FileUtils.cp(file, "stylesheets/#{File.basename(file)}")
+  end
+  Dir["#{file_path}/*.js"].each do |file|
+    FileUtils.cp(file, "javascripts/#{File.basename(file)}")
+  end
+end
+
 # source control
 file '.gitignore', <<-FILES
 .DS_Store
@@ -61,10 +69,9 @@ log/*
 tmp/*
 tmp/**/*
 config/database.yml
-coverage/*
-coverage/**/*
 FILES
 
 git :init
 git :add => '.'
 git :commit => '-a -m "Initial commit"'
+
